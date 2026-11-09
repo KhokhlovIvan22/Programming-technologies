@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АИС «Изготовление и заказ мебели»</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        
+        <!-- Логотип и название системы -->
+        <div class="logo-block">
+            <div>
+                <h1>АИС «Изготовление и заказ мебели»</h1>
+            </div>
+        </div>
+
+        <!-- Меню навигации -->
+        <nav class="app-nav">
+            <a href="#section-auth" class="nav-btn auth-btn">Вход</a>
+
+            <!-- Заказы -->
+            <div class="dropdown-menu">
+                <span class="nav-btn dropdown-title">Заказы ▾</span>
+                <div class="dropdown-content">
+                    <a href="#section-order-form">Разместить заказ</a>
+                    <a href="#section-status">Проверить состояние заказа</a>
+                </div>
+            </div>
+
+            <!-- Дизайн-проект -->
+            <div class="dropdown-menu">
+                <span class="nav-btn dropdown-title">Дизайн-проект ▾</span>
+                <div class="dropdown-content">
+                    <a href="#section-measurements">Замеры</a>
+                    <a href="#section-layout">Загрузка макета</a>
+                    <a href="#section-design">Расчёт и договор</a>
+                    <a href="#section-cancellation">Отмена заказа</a>
+                </div>
+            </div>
+
+            <!-- Оплата -->
+            <a href="#section-payment" class="nav-btn">Оплата</a>
+
+            <!-- Учёт материалов -->
+            <a href="#section-materials" class="nav-btn">Учёт материалов</a>
+
+            <!-- Накладные расходы -->
+            <a href="#section-overhead" class="nav-btn">Накладные расходы</a>
+
+            <!-- Выработка мастеров -->
+            <a href="#section-workoutput" class="nav-btn">Выработка мастеров</a>
+
+            <!-- Аналитика -->
+            <a href="#section-reports" class="nav-btn">Аналитика</a>
+        </nav>
+
+        <!-- Информационный блок пользователя -->
+        <div class="user-profile">
+            <span class="user-role">Пользователь: <strong>не авторизован</strong></span>
+            <span class="delivery-date-info">Роль: <strong>гость</strong></span>
+        </div>
+
+    </header>
+
+    <!-- Main -->
+    <main class="app-main">
+
+        <!-- Поисковая панель -->
+        <section class="toolbar-section">
+            <div class="search-box">
+                <label for="global-search">Поиск по АИС:</label>
+                <input type="text" id="global-search" placeholder="Поиск по ID заказа, клиенту или материалу...">
+                <button type="button" class="btn primary-btn">Найти</button>
+            </div>
+         </section>
+
+        <!-- Блок системных ошибок и уведомлений -->
+        <section class="error-notification-box">
+            <div class="error-alert-title">Системное уведомление / Ошибка:</div>
+            <p class="error-alert-text">Внимание! Ошибка соединения с сервером базы данных при проверке статуса заказа №104. Проверьте правильность введённого ID.</p>
+        </section>
+
+        <!-- Сетка карточек с функционалом предметной области -->
+        <div class="dashboard-grid">
+
+            <!-- Форма авторизации -->
+            <section id="section-auth" class="card-widget auth-widget">
+                <div class="widget-header">
+                    <h2>Форма авторизации</h2>
+                    <span class="badge auth-badge">Авторизация</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="login">Логин:</label>
+                        <input type="text" id="login" placeholder="Введите логин...">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="password" id="password" placeholder="••••••••">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Войти в систему</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Форма заказа -->
+            <section id="section-order-form" class="card-widget">
+                <div class="widget-header">
+                    <h2>Разместить заказ</h2>
+                    <span class="badge">Клиент</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="furniture-type">Вид мебели в списке:</label>
+                        <select id="furniture-type">
+                            <option>Шкаф-купе стандартный</option>
+                            <option>Кухонный гарнитур</option>
+                            <option>Стол письменный</option>
+                            <option>Нестандартная мебель (описать словами)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dimensions">Размеры изделия:</label>
+                        <input type="text" id="dimensions" placeholder="Например: 2400x600x2200 мм">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="wood-type">Вид дерева / материалов:</label>
+                            <input type="text" id="wood-type" placeholder="Массив дуба, ЛДСП...">
+                        </div>
+                        <div class="form-group">
+                            <label for="hardware-type">Вид фурнитуры:</label>
+                            <input type="text" id="hardware-type" placeholder="Blum, Hettich...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Адрес доставки:</label>
+                        <input type="text" id="address" placeholder="г. Минск, ул. ...">
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-desc">Описание индивидуального заказа (если нет в списке):</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Приложить эскиз / фото:</label>
+                        <input type="file" id="photo">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Оформить заказ</button>
+                    </div>
+                    <span class="wireframe-note">После ввода заказа система отправит сообщение по email со всеми деталями и реквизитами.</span>
+                </form>
+            </section>
+
+            <!-- Проверить состояние заказа -->
+            <section id="section-status" class="card-widget">
+                <div class="widget-header">
+                    <h2>Проверить состояние заказа</h2>
+                    <span class="badge">Клиент</span>
+                </div>
+                <div class="widget-form">
+                    <div class="form-group">
+                        <label for="order-id">Номер заказа (ID):</label>
+                        <div class="input-with-btn">
+                            <input type="number" id="order-id" value="104">
+                            <button type="button" class="btn secondary-btn">Запросить</button>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <p><strong>Текущий статус:</strong> Поставлен в очередь</p>
+                        <p><strong>Предварительная стоимость:</strong> 2 450.00 BYN</p>
+                        <p><strong>Размер предоплаты (30%):</strong> 735.00 BYN</p>
+                        <p><strong>Стоимость установки:</strong> 150.00 BYN</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. Загрузка замеров помещения -->
+            <section id="section-measurements" class="card-widget">
+                <div class="widget-header">
+                    <h2>Ввод результатов замеров</h2>
+                    <span class="badge">Дизайнер</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="measurements-input">Результаты замеров на объекте:</label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Сохранить замеры в системе</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 2. Загрузка графического макета -->
+            <section id="section-layout" class="card-widget">
+                <div class="widget-header">
+                    <h2>Загрузка графического макета</h2>
+                    <span class="badge">Дизайнер</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="layout-file">Файл проекта / чертеж мебели:</label>
+                        <input type="file" id="layout-file">
+                    </div>
+                    <div class="form-group">
+                        <label for="layout-comment">Комментарий к макету:</label>
+                        <input type="text" id="layout-comment" placeholder="Материалы фасада, схемы сборки...">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Загрузить макет</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 3. Согласование и расчет сметы -->
+            <section id="section-design" class="card-widget">
+                <div class="widget-header">
+                    <h2>Согласовать дизайн-проект</h2>
+                    <span class="badge">Дизайнер</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary-btn">Рассчитать стоимость и предоплату</button>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calculated-cost">Расчётная смета и предоплата:</label>
+                            <input type="text" id="calculated-cost" value="2 450.00 BYN (Предоплата: 735 BYN)" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="delivery-date">Плановая дата поставки:</label>
+                            <input type="date" id="delivery-date" value="2026-12-15">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Подписать договор с заказчиком</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Фиксация отмены заказа -->
+            <section id="section-cancellation" class="card-widget error-widget">
+                <div class="widget-header">
+                    <h2>Фиксация отмены заказа</h2>
+                    <span class="badge danger-badge">Дизайнер</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <p class="error-desc">Фиксация отказа клиента от подписания договора или несогласия со стоимостью:</p>
+                    <div class="form-group">
+                        <label for="cancel-reason">Причина отмены заказа:</label>
+                        <input type="text" id="cancel-reason" placeholder="Например: отказ клиента от договора, несогласие с датой поставки">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn danger-btn">Перевести заказ в статус «Отменён»</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Регистрация оплаты -->
+            <section id="section-payment" class="card-widget">
+                <div class="widget-header">
+                    <h2>Регистрация оплаты</h2>
+                    <span class="badge">Офисный работник / Мастер по доставке и установке</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="pay-method">Способ оплаты:</label>
+                        <select id="pay-method">
+                            <option>Наличными мастеру по доставке (сдача денег в кассу по возвращении)</option>
+                            <option>Через переносную кассу (офисный работник / мастер)</option>
+                            <option>Банковским переводом на счёт организации (офисный работник)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pay-amount">Вносимая сумма:</label>
+                        <input type="text" id="pay-amount" value="735.00 BYN">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Зарегистрировать оплату</button>
+                        <button type="button" class="btn secondary-btn">Печать счёт-фактуры / чека</button>
+                    </div>
+                    <span class="wireframe-note">При оплате наличными мастер передает деньги в кассу компании по возвращении, и заказ помечается как оплаченный.</span>
+                </form>
+            </section>
+
+            <!-- Учёт материалов -->
+            <section id="section-materials" class="card-widget">
+                <div class="widget-header">
+                    <h2>Учёт закупленных материалов</h2>
+                    <span class="badge">Кладовщик / Товаровед</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="mat-name">Наименование закупленного материала:</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mat-qty">Количество:</label>
+                            <input type="text" id="mat-qty" placeholder="50 кв.м / 200 шт">
+                        </div>
+                        <div class="form-group">
+                            <label for="mat-cost">Стоимость / Категория:</label>
+                            <input type="text" id="mat-cost" placeholder="1 200.00 BYN">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Зарегистрировать поступление материалов</button>
+                    </div>
+                    <span class="wireframe-note">Фиксируется факт покупки и поступления материалов на предприятие.</span>
+                </form>
+            </section>
+
+            <!-- Учёт накладных расходов -->
+            <section id="section-overhead" class="card-widget">
+                <div class="widget-header">
+                    <h2>Учёт накладных расходов</h2>
+                    <span class="badge">Бухгалтер</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="expense-category">Категория расходов:</label>
+                        <select id="expense-category">
+                            <option>Расход электричества</option>
+                            <option>Коммунальные платежи</option>
+                            <option>Аренда помещения для цеха</option>
+                            <option>Затраты на транспортные перевозки</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-amount">Сумма расходов:</label>
+                        <input type="text" id="expense-amount" placeholder="Сумма в BYN">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Зафиксировать расход</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Учёт выработки и расписания -->
+            <section id="section-workoutput" class="card-widget">
+                <div class="widget-header">
+                    <h2>Учёт выработки и расписания</h2>
+                    <span class="badge">Менеджер</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="furniture-units">Количество изготовленной мебели за день:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="master-hours">Отработанные часы мастеров / расписание:</label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Сохранить данные о выработке</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Аналитические отчёты -->
+            <section id="section-reports" class="card-widget">
+                <div class="widget-header">
+                    <h2>Аналитическая обработка данных</h2>
+                    <span class="badge">Руководитель</span>
+                </div>
+                <form class="widget-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="report-type">Выберите вид аналитического отчёта:</label>
+                        <select id="report-type">
+                            <option>Суммарное количество изготовленной мебели по категориям за период</option>
+                            <option>График работы работников за период</option>
+                            <option>Суммарное количество купленных материалов по категориям за период</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Дата начала периода:</label>
+                            <input type="date" value="2026-01-01">
+                        </div>
+                        <div class="form-group">
+                            <label>Дата окончания периода:</label>
+                            <input type="date" value="2026-11-06">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn primary-btn">Запросить аналитический отчёт</button>
+                    </div>
+                    <div class="report-preview-box">
+                        <p class="preview-title">Результат обработки данных:</p>
+                        <p class="preview-content">Сформирован сводный отчёт по выбранной категории. Данные готовы к просмотру.</p>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-info">
+            <p>&copy; 2026 АИС «Изготовление и заказ мебели»</p>
+        </div>
+    </footer>
+
+</body>
+</html>
